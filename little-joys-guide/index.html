@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Little Joys — Product Guide</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a href="#/" class="brand">
+      <span class="brand-mark">LJ</span>
+      <span class="brand-name">Little Joys<span class="brand-sub">guide</span></span>
+    </a>
+    <nav class="topnav">
+      <a href="#/profile" data-nav="profile">Child profile</a>
+      <a href="#/trial" data-nav="trial">Try something new</a>
+      <a href="#/subscribe" data-nav="subscribe">Reorder</a>
+      <a href="#/feedback" data-nav="feedback">Ask us</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app" class="app"></main>
+
+<footer class="footer">
+  <p>Prototype for Mosaic Wellness · Little Joys parent guidance companion · scan → guide → feed back</p>
+</footer>
+
+<template id="tpl-home">
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">You scanned a code on pack</p>
+      <h1>What's actually right for your child?</h1>
+      <p class="lede">Trust in the ingredients is the easy part. The hard part is knowing how much, how often, and from what age — for <em>your</em> child. Scan a pack, and we'll tell you in plain language.</p>
+    </div>
+  </section>
+
+  <section class="scan-sim">
+    <h2>Simulate a pack scan</h2>
+    <p class="muted">In the real product this screen opens automatically when a parent scans the QR code printed on a Little Joys pack. Pick a product below to see what they'd see.</p>
+    <div class="product-grid" id="product-grid"></div>
+  </section>
+
+  <section class="profile-nudge" id="profile-nudge" hidden>
+    <div class="nudge-card">
+      <p class="nudge-kicker">Before we guide you</p>
+      <h3>Tell us about your child, once</h3>
+      <p>Age and any foods to avoid — this takes under a minute and every product you scan after this will be checked against it automatically.</p>
+      <a class="btn btn-primary" href="#/profile">Set up child profile</a>
+    </div>
+  </section>
+</template>
+
+<template id="tpl-profile">
+  <section class="page-head">
+    <p class="eyebrow">One-time setup</p>
+    <h1>Your child's profile</h1>
+    <p class="lede">We use this to check every product against your child's age and any foods they need to avoid. Nothing here is shared outside this device in the prototype.</p>
+  </section>
+
+  <form class="card form-card" id="profile-form">
+    <div class="field">
+      <label for="child-name">Child's name or nickname</label>
+      <input type="text" id="child-name" placeholder="e.g. Anaya" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label>Age band</label>
+      <div class="chip-row" id="age-band-row" data-name="ageBand">
+        <button type="button" class="chip" data-value="6-12m">6–12 months</button>
+        <button type="button" class="chip" data-value="1-3y">1–3 years</button>
+        <button type="button" class="chip" data-value="4-8y">4–8 years</button>
+        <button type="button" class="chip" data-value="9-12y">9–12 years</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Foods to avoid or limit</label>
+      <p class="hint">Tick anything your child cannot have, or that you want kept to a minimum.</p>
+      <div class="chip-row multi" id="allergen-row" data-name="avoid">
+        <button type="button" class="chip" data-value="gluten">Gluten</button>
+        <button type="button" class="chip" data-value="dairy">Dairy</button>
+        <button type="button" class="chip" data-value="nuts">Nuts</button>
+        <button type="button" class="chip" data-value="soy">Soy</button>
+        <button type="button" class="chip" data-value="egg">Egg</button>
+        <button type="button" class="chip" data-value="low-sugar">Keep sugar low</button>
+        <button type="button" class="chip" data-value="low-salt">Keep salt low</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="notes">Anything else we should know?</label>
+      <textarea id="notes" rows="2" placeholder="e.g. fussy about texture, recovering from illness..."></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Save profile</button>
+      <span class="save-confirm" id="save-confirm" hidden>Saved ✓</span>
+    </div>
+  </form>
+</template>
+
+<template id="tpl-product">
+  <section class="product-view">
+    <a href="#/" class="back-link">← All products</a>
+    <div class="product-header" id="product-header"></div>
+
+    <div class="guidance-stack" id="guidance-stack"></div>
+
+    <div class="card next-steps">
+      <h3>What next?</h3>
+      <div class="next-grid">
+        <a href="#/trial" class="next-card">
+          <span class="next-label">Not sure yet?</span>
+          <strong>Try it in a sampler pack first</strong>
+        </a>
+        <a href="#/subscribe" class="next-card">
+          <span class="next-label">Already using it?</span>
+          <strong>Set up auto-reorder</strong>
+        </a>
+        <a href="#/feedback" class="next-card">
+          <span class="next-label">Something unclear?</span>
+          <strong>Ask us directly</strong>
+        </a>
+      </div>
+    </div>
+  </section>
+</template>
+
+<template id="tpl-trial">
+  <section class="page-head">
+    <p class="eyebrow">Sampler &amp; trial path</p>
+    <h1>Try before you commit</h1>
+    <p class="lede">Build a small trial pack instead of buying a full-size pack of something your child has never tasted. Add up to three items.</p>
+  </section>
+
+  <div class="trial-layout">
+    <div class="trial-picker" id="trial-picker"></div>
+    <aside class="card trial-cart">
+      <h3>Your trial pack</h3>
+      <ul id="trial-cart-list" class="cart-list"></ul>
+      <p class="muted small" id="trial-empty">Nothing added yet — pick up to 3 items to try.</p>
+      <button class="btn btn-primary" id="trial-confirm" disabled>Add trial pack to order</button>
+      <p class="confirm-msg" id="trial-confirm-msg" hidden>Trial pack queued ✓ — it'll ship with your next order.</p>
+    </aside>
+  </div>
+</template>
+
+<template id="tpl-subscribe">
+  <section class="page-head">
+    <p class="eyebrow">Replenishment</p>
+    <h1>Never run out</h1>
+    <p class="lede">Set a product to arrive automatically, at the pace your child actually goes through it. You can change or cancel anytime.</p>
+  </section>
+
+  <div class="subscribe-list" id="subscribe-list"></div>
+</template>
+
+<template id="tpl-feedback">
+  <section class="page-head">
+    <p class="eyebrow">Feedback loop</p>
+    <h1>Ask us, or tell us what you worked around</h1>
+    <p class="lede">If something wasn't clear, or you found your own way to make a product work, tell us. Patterns here shape the next pack and the next product.</p>
+  </section>
+
+  <form class="card form-card" id="feedback-form">
+    <div class="field">
+      <label for="fb-topic">This is about</label>
+      <select id="fb-topic">
+        <option value="general">General question</option>
+        <option value="millet-noodles">Millet Noodles</option>
+        <option value="veggie-puffs">Veggie Puffs</option>
+        <option value="dosage">Portion / serving amount</option>
+        <option value="reaction">Something my child reacted to</option>
+        <option value="other">Something else</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="fb-text">Your question, or what you ended up doing instead</label>
+      <textarea id="fb-text" rows="3" placeholder="e.g. 'The serving felt like too much for a 2-year-old, so I split it across two meals instead.'"></textarea>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Send to Little Joys</button>
+      <span class="save-confirm" id="fb-confirm" hidden>Sent ✓ thank you</span>
+    </div>
+  </form>
+
+  <div class="card">
+    <h3>What other parents have asked</h3>
+    <ul class="feedback-list" id="feedback-list"></ul>
+  </div>
+</template>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
